@@ -59,75 +59,94 @@ Internet GW     EKS Control Plane + Node Groups
 
 
 
-Getting Started
-🛠 Prerequisites
-
-Terraform ≥ 1.3.0
-
-AWS CLI configured (aws configure)
-
-An AWS account with appropriate IAM permissions
-
-
 🧪 Usage
 1. Clone the Repository
+   
+```
 git clone https://github.com/your-username/your-repo.git
 cd your-repo
-
+```
 2. Initialize Terraform
+
+```
 terraform init
 
+```
+
 3. Review and Apply the Plan
-terraform plan
-terraform apply
+
+   ```
+   terraform plan
+   terraform apply
+   ```
 
 4. Output
 
-After provisioning, Terraform will output:
+        - After provisioning, Terraform will output:
 
-VPC ID
+        - VPC ID
+         
+        - Public and Private Subnet IDs
 
-Public and Private Subnet IDs
+        - EKS Cluster Name, Endpoint, and CA Data
 
-EKS Cluster Name, Endpoint, and CA Data
-
-Node Group Name
-
-📦 Variables
+        - Node Group Name
 Root Module (main.tf)
-Name	Type	Default	Description
-aws_region	string	"us-west-2"	AWS Region to deploy to
-cluster_name	string	"production-eks-cluster"	Name of the EKS cluster
-vpc_cidr	string	"10.0.0.0/16"	CIDR block for VPC
+
+```
+| Name           | Type   | Default                    | Description             |
+| -------------- | ------ | -------------------------- | ----------------------- |
+| `aws_region`   | string | `"us-west-2"`              | AWS Region to deploy to |
+| `cluster_name` | string | `"production-eks-cluster"` | Name of the EKS cluster |
+| `vpc_cidr`     | string | `"10.0.0.0/16"`            | CIDR block for VPC      |
+```
+
 VPC Module
-Name	Type	Description
-name	string	Prefix for all resources
-vpc_cidr	string	CIDR block for VPC
-public_subnet_cidrs	list(string)	List of public subnet CIDRs
-private_subnet_cidrs	list(string)	List of private subnet CIDRs
-availability_zones	list(string)	List of AZs (e.g., ["us-west-2a", "us-west-2b"])
+```
+| Name                   | Type         | Description                                        |
+| ---------------------- | ------------ | -------------------------------------------------- |
+| `name`                 | string       | Prefix for all resources                           |
+| `vpc_cidr`             | string       | CIDR block for VPC                                 |
+| `public_subnet_cidrs`  | list(string) | List of public subnet CIDRs                        |
+| `private_subnet_cidrs` | list(string) | List of private subnet CIDRs                       |
+| `availability_zones`   | list(string) | List of AZs (e.g., `["us-west-2a", "us-west-2b"]`) |
+
+```
 EKS Module
-Name	Type	Description
-cluster_name	string	Name of the EKS cluster
-private_subnet_ids	list(string)	Subnets for control plane
-enabled_cluster_log_types	list(string)	EKS logging types (e.g. ["api", "audit"])
+```
+
+| Name                        | Type         | Description                                 |
+| --------------------------- | ------------ | ------------------------------------------- |
+| `cluster_name`              | string       | Name of the EKS cluster                     |
+| `private_subnet_ids`        | list(string) | Subnets for control plane                   |
+| `enabled_cluster_log_types` | list(string) | EKS logging types (e.g. `["api", "audit"]`) |
+```
+
 Node Groups Module
-Name	Type	Default	Description
-cluster_name	string	n/a	Name of the EKS cluster
-subnet_ids	list(string)	n/a	Subnet IDs for node group
-desired_size	number	2	Desired number of worker nodes
-max_size	number	3	Maximum number of worker nodes
-min_size	number	1	Minimum number of worker nodes
-instance_types	list(string)	["t3.medium"]	EC2 instance types for nodes
-📤 Outputs
-Output Name	Description
-vpc_id	The ID of the created VPC
-public_subnets	List of public subnet IDs
-private_subnets	List of private subnet IDs
-eks_cluster_name	Name of the EKS cluster
-eks_cluster_endpoint	API server endpoint
-eks_cluster_ca_data	Cluster certificate authority data
-node_group_name	Name of the EKS node group
+```
+| Name             | Type         | Default         | Description                    |
+| ---------------- | ------------ | --------------- | ------------------------------ |
+| `cluster_name`   | string       | n/a             | Name of the EKS cluster        |
+| `subnet_ids`     | list(string) | n/a             | Subnet IDs for node group      |
+| `desired_size`   | number       | `2`             | Desired number of worker nodes |
+| `max_size`       | number       | `3`             | Maximum number of worker nodes |
+| `min_size`       | number       | `1`             | Minimum number of worker nodes |
+| `instance_types` | list(string) | `["t3.medium"]` | EC2 instance types for nodes   |
+```
+Outputs
+```
+| Output Name            | Description                        |
+| ---------------------- | ---------------------------------- |
+| `vpc_id`               | The ID of the created VPC          |
+| `public_subnets`       | List of public subnet IDs          |
+| `private_subnets`      | List of private subnet IDs         |
+| `eks_cluster_name`     | Name of the EKS cluster            |
+| `eks_cluster_endpoint` | API server endpoint                |
+| `eks_cluster_ca_data`  | Cluster certificate authority data |
+| `node_group_name`      | Name of the EKS node group         |
+
+```
+
 🔐 Security Notes
 
 Ensure your IAM roles and policies follow the principle of least privilege.
@@ -136,21 +155,29 @@ All nodes are launched in private subnets.
 
 Only expose services you need to via LoadBalancer or Ingress.
 
-🧹 Cleanup
+Cleanup
 
-To delete all resources:
-
-terraform destroy
-
-🧾 License
-
-MIT License
+```
+  terraform destroy
+```
 
 🙋‍♂️ Support
 
 For issues, feel free to open a GitHub issue or submit a PR for improvements.
 
+
+
 Happy Terraforming! 🚜
 
 
+```
+   
 Let me know if you'd like this README customized further for a specific team or deployment environment.
+```
+
+
+
+
+
+
+   
